@@ -41,6 +41,9 @@ class User
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deleted_at = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $email = null;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -173,6 +176,18 @@ class User
     public function setDeletedAt(?\DateTimeInterface $deleted_at): self
     {
         $this->deleted_at = $deleted_at;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

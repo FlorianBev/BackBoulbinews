@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,9 +33,13 @@ class UserController extends AbstractController
     {
         # Instanciation d'un nouvel utilisateur
         $user = new User();
-        $user->setRoles(["ROLE_USER"]);
+        $user->setRole("ROLE_USER");
+        $user->setFirstname($request);
+        $user->setRole("ROLE_USER");
+        $user->setRole("ROLE_USER");
         $user->setCreatedAt(new DateTime());
         $user->setUpdatedAt(new DateTime());
+        $user->setDeletedAt(new DateTime());
 
         # Création du formulaire
         $form = $this->createFormBuilder($user)
