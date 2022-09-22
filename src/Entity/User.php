@@ -16,9 +16,6 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $name = null;
-
     #[ORM\OneToMany(targetEntity: Post::class, mappedBy: "idUser")]
     #[ORM\JoinColumn(name: "post_id", referencedColumnName: "id")]
     private Collection $posts;
