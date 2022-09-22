@@ -1,0 +1,1 @@
+SYMFONY_ENDPOINT=https://symfony.sh/r/github.com/symfony/recipes-contrib/85 composer req cli:^3.3 webserver:^3.3 twig:^3.3 overblog/graphql-bundle:0.9.0-BETA4
