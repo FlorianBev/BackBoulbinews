@@ -7,8 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotations\ApiRessource;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ApiRessource()]
 class User
 {
     #[ORM\Id]
@@ -16,12 +18,8 @@ class User
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: "idUser")]
-    #[ORM\JoinColumn(name: "post_id", referencedColumnName: "id")]
-    private Collection $posts;
-
-    #[ORM\Column(length: 50)]
-    private ?string $firstname = null;
+    #[ORM\Column(length: 360)]
+    private ?string $email = null;
 
     #[ORM\Column(length: 50)]
     private ?string $password = null;
@@ -30,7 +28,14 @@ class User
     private ?string $role = null;
 
     #[ORM\Column(length: 50)]
+    private ?string $firstname = null;
+
+    #[ORM\Column(length: 50)]
     private ?string $lastname = null;
+
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: "idUser")]
+    #[ORM\JoinColumn(name: "post_id", referencedColumnName: "id")]
+    private Collection $posts;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
@@ -40,9 +45,6 @@ class User
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deleted_at = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $email = null;
 
     public function __construct()
     {

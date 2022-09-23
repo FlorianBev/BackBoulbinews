@@ -9,8 +9,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 
-
-
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ApiResource()]
 class Category
@@ -26,6 +24,10 @@ class Category
     #[ORM\Column(length: 50)]
     private ?string $alias = null;
 
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: "idCategory")]
+    #[ORM\JoinColumn(name: "post_id", referencedColumnName: "id")]
+    private Collection $posts;
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
 
@@ -34,10 +36,6 @@ class Category
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $deleted_at = null;
-
-    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: "idCategory")]
-    #[ORM\JoinColumn(name: "post_id", referencedColumnName: "id")]
-    private Collection $posts;
 
     public function getId(): ?int
     {

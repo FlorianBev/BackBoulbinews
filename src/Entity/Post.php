@@ -6,8 +6,10 @@ use App\Entity\User;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\PostRepository;
+use ApiPlatform\Core\Annotation\ApiResource;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
+#[ApiResource()]
 class Post
 {
     #[ORM\Id]
@@ -15,14 +17,25 @@ class Post
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 200)]
+    private ?string $title = null;
+
     #[ORM\Column(length: 50)]
     private ?string $alias = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $title = null;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $image = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", nullable: false)]
+    private ?User $idUser = null;
+
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(name: "category_id", referencedColumnName: "id", nullable: false)]
+    private ?User $idCategory = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
@@ -35,17 +48,6 @@ class Post
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $published_at = null;
-
-    #[ORM\Column(length: 50)]
-    private ?string $image = null;
-
-    #[ORM\ManyToOne(targetEntity: User::class)]
-    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
-    private ?User $idUser = null;
-
-    #[ORM\ManyToOne(targetEntity: Category::class)]
-    #[ORM\JoinColumn(name: "category_id", referencedColumnName: "id")]
-    private ?User $idCategory = null;
 
     public function getId(): ?int
     {
